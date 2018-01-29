@@ -2,24 +2,39 @@ var X = [];
 var Y = [];
 
 var T;
-var learningRate = 0.00001;
+var learningRate = 0.0001;
+
+var instruction = "Tap on the Screen to Insert Data Points...";
 
 function setup () {
 
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
   T = [Math.random(height), 4.0];
-  background(51);
 }
 
 function draw () {
   background(51);
+
+  fill(250);
+  noStroke();
+  textFont('monospace');
+  textSize(25);
+  text("Linear Regression using Gradient Descent", 15, 40);
+  textSize(20);
+  text(instruction, 15, windowHeight - 30);
+  fill(100);
+  textSize(15);
+  text("Author : Kaustubh Olpadkar", windowWidth - 270, 40);
+  noFill();
+  noStroke();
+
   plotData();
   if (X.length >= 2) {
     gradientDescent();
     fit();
     // console.log(cost());
   }
-
+  noFill();
 }
 
 function mouseClicked () {
@@ -29,7 +44,7 @@ function mouseClicked () {
 
 function gradientDescent () {
   T[0] -= learningRate * gradient(0) * 10000;
-  T[1] -= learningRate * gradient(1);
+  T[1] -= learningRate * gradient(1) * 0.01;
 }
 
 function gradient (n) {
@@ -68,12 +83,15 @@ function h (x) {
 }
 
 function plotData () {
+  noStroke();
+  fill(255);
   for (var i = 0; i < X.length; i++) {
     ellipse(X[i], Y[i], 10);
   }
+  noFill();
 }
 
 function setRadomly () {
-  T[0] = Math.random(10);
+  T[0] = Math.tan(Math.random(Math.PI));
   T[1] = Math.random(20);
 }
